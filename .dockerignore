@@ -1,0 +1,14 @@
+# .dockerignore：定義 Docker build 時要忽略的檔案和目錄
+# 這些檔案不應該被複製到 Docker 映像中，以保持映像檔的輕量和安全。
+
+.venv/            # Poetry 創建的虛擬環境
+.git/             # Git 版本控制相關文件
+__pycache__/      # Python 編譯緩存文件
+*.pyc             # Python 編譯緩存文件
+.env              # 環境變數文件，包含敏感資訊
+data/             # 本地開發使用的 SQLite 資料庫檔案
+.pytest_cache/    # pytest 緩存
+htmlcov/          # 測試覆蓋率報告
+.vscode/          # VS Code 配置文件 (可選，但通常不需要在映像中)
+alembic/versions/*.pyc # Alembic 遷移腳本的編譯文件
+logs/             # 日誌檔案
