@@ -1,0 +1,45 @@
+# .gitignore：定義 Git 版本控制時要忽略的檔案和目錄
+
+# Python 相關
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Poetry 相關
+poetry.lock # 通常情況下會提交 poetry.lock，但如果希望每次環境都重新解析依賴，則可忽略
+
+# 環境變數
+.env
+
+# 資料庫 (SQLite)
+data/*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+# .dockerignore # 本身不應被忽略，但這裡作為範例
+# Dockerfile # 本身不應被忽略，但這裡作為範例
+
+# Alembic 遷移版本文件
+alembic/versions/*.pyc
+
+# 測試報告
+.pytest_cache/
+htmlcov/
+
+# 日誌檔案
+logs/
+
+# 作業系統和編輯器文件
+.DS_Store
+Thumbs.db
+.vscode/ # VS Code 配置文件
+*.swp
+*~
