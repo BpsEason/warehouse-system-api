@@ -1,4 +1,4 @@
-# README — 倉儲物流系統教學專案
+# 倉儲物流系統教學專案
 
 本檔案提供明確的上手指引、教學重點與工程師交接清單，讓開發者能在 30–60 分鐘內完成環境準備並立即開始實作或教學。專案技術棧：FastAPI、SQLModel (Pydantic v2)、Alembic、Poetry、Docker。
 
@@ -17,7 +17,7 @@
 前提：安裝 Python 3.10+、Poetry、Docker（選用）、Git。
 
 - 取得程式碼
-  - git clone <your-repo-url>
+  - git clone https://github.com/BpsEason/warehouse-system-api.git
   - cd warehouse-system-api
 
 - 建立環境檔
