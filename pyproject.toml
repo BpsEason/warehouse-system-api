@@ -1,0 +1,26 @@
+# pyproject.toml：Poetry 專案的配置檔案
+
+[tool.poetry]
+name = "warehouse-system-api"
+version = "0.1.0"
+description = "A simple Warehouse Management System API built with FastAPI, SQLModel, and Docker."
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.12" # 支援的 Python 版本，推薦 3.12+
+fastapi = "0.120.0" # FastAPI 框架，兼容 Pydantic v2
+uvicorn = {extras = ["standard"], version = "^0.38.0"} # ASGI 伺服器
+python-dotenv = "^1.0.0" # 用於載入 .env 環境變數
+sqlmodel = "0.0.27" # 資料模型和 ORM，確保兼容 Pydantic v2 (0.0.27+ 支援 v2)
+alembic = "1.17.0" # 資料庫遷移工具
+psycopg2-binary = "^2.9.9" # PostgreSQL 資料庫驅動 (如果使用 PostgreSQL)
+pydantic = "2.12.3" # 明確指定 Pydantic v2 版本
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0" # 測試框架
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

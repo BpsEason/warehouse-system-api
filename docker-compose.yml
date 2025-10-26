@@ -1,0 +1,50 @@
+# docker-compose.yml：用於定義和運行多容器 Docker 應用程式
+
+version: '3.8' # Docker Compose 文件格式版本
+
+services:
+  # ===============================================
+  # web 服務：FastAPI 應用程式
+  # ===============================================
+  web:
+    build:
+      context: . # 從當前目錄的 Dockerfile 建置映像檔
+      dockerfile: Dockerfile
+    container_name: warehouse_system_web
+    # command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload # 開發模式時可取消註解
+    # 如果想在容器內直接運行，且不在 Dockerfile 中指定 CMD，可以取消上方註解。
+    # 但一般來說，CMD 應在 Dockerfile 中定義，除非是開發時需要熱重載。
+    ports:
+      - "8000:8000" # 將主機的 8000 埠映射到容器的 8000 埠
+    env_file:
+      - .env # 載入 .env 檔案中的環境變數
+    volumes:
+      # 將本地的應用程式程式碼映射到容器中，方便開發時的即時修改 (僅限開發環境)
+      # - .:/app # 開發模式使用此行，但生產環境不推薦，因為會覆蓋 Docker 映像內的代碼
+      # 如果需要持續化 SQLite 資料庫檔案，可以映射 data 目錄
+      - ./data:/app/data
+    # depends_on: # 如果只使用 SQLite，則不需要依賴其他服務；如果使用 PostgreSQL，則應依賴 'db' 服務
+    #   - db # 如果使用 PostgreSQL，則取消此行註解
+    restart: unless-stopped # 容器停止後自動重啟，除非手動停止
+
+  # ===============================================
+  # db 服務：PostgreSQL 資料庫 (如果需要，請取消註解)
+  # ===============================================
+  # db:
+  #   image: postgres:13-alpine # 使用 PostgreSQL 官方映像檔
+  #   container_name: warehouse_system_db
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER:-user} # 從 .env 獲取用戶名，預設為 'user'
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password} # 從 .env 獲取密碼，預設為 'password'
+  #     POSTGRES_DB: ${POSTGRES_DB:-warehouse_db} # 從 .env 獲取資料庫名，預設為 'warehouse_db'
+  #   ports:
+  #     - "5432:5432" # 將主機的 5432 埠映射到容器的 5432 埠
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data # 持久化資料庫數據
+  #   restart: unless-stopped
+
+# ===============================================
+# 卷 (Volumes)：用於持久化數據
+# ===============================================
+volumes:
+  db_data: # PostgreSQL 資料庫的數據卷 (如果啟用 db 服務)
